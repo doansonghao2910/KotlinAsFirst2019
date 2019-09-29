@@ -74,7 +74,7 @@ fun digitNumber(n: Int): Int {
     var a = 0
     var b: Int = n
     if (n == 0) return 1
-    while (n != 0) {
+    while (b != 0) {
         b /= 10
         a += 1
     }
@@ -165,6 +165,7 @@ fun maxDivisor(n: Int): Int {
 fun isCoPrime(m: Int, n: Int): Boolean {
     var a = m
     var b = n
+    if (a == 1 && b == 1) return true
     if (a == b) return false
     while (a != b) {
         if (a > b) {
@@ -348,6 +349,7 @@ fun hasDifferentDigits(n: Int): Boolean {
     var x: Int = n
     var a: Int = 0
     var b: Int = 0
+    if (n in 0..9) return true
     while (a == b) {
         a = x % 10
         x = x / 10
@@ -381,37 +383,24 @@ fun squareSequenceDigit(n: Int): Int {
 
     }
 
-    fun countofsequence(x: Int): Int {
-        var s = 0
-        for (k: Int in 1..x) {
-            s = s + count(k * k)
-
-        }
-        return s
-
-    }
-
-
-    fun cc(n: Int): Int {
-        val a: Int = n
-
-        var k: Int = 0
-        while (countofsequence(k) < a) {
-            k = k + 1
-            if (countofsequence(k) >= a) break
-
-        }
+    var b = 0
+    var k = 0
+    while (k < n) {
+        k++
+        b = b + count(k * k)
         var i: Int = 0
         var c: Int = k * k
-        var b: Int = countofsequence(k)
-        while (b >= a) {
-            i = c % 10
-            c = c / 10
-            b = b - 1
-        }
+        if (b >= n) {
+            while (b >= n) {
+                i = c % 10
+                c = c / 10
+                b = b - 1
+            }
         return i
+            break
+        }
     }
-    return cc(n)
+    return 0
 }
 
 /**

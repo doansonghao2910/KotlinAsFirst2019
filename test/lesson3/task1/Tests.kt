@@ -220,7 +220,7 @@ class Tests {
         assertTrue(hasDifferentDigits(323))
         assertTrue(hasDifferentDigits(54))
         assertTrue(hasDifferentDigits(222266666))
-        assertFalse(hasDifferentDigits(0))
+        assertFalse(hasDifferentDigits(11))
         assertFalse(hasDifferentDigits(777))
         assertTrue(hasDifferentDigits(31122))
     }
@@ -234,6 +234,7 @@ class Tests {
         assertEquals(6, squareSequenceDigit(12))
         assertEquals(0, squareSequenceDigit(17))
         assertEquals(9, squareSequenceDigit(27))
+        assertEquals(1, squareSequenceDigit(500000))
     }
 
     @Test
