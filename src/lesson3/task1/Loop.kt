@@ -347,9 +347,9 @@ fun isPalindrome(n: Int): Boolean {
  */
 fun hasDifferentDigits(n: Int): Boolean {
     var x: Int = n
-    var a: Int = 0
-    var b: Int = 0
-    if (n in 0..9) return true
+    var a = 0
+    var b = 0
+    if (x in 0..9) return false
     while (a == b) {
         a = x % 10
         x = x / 10
