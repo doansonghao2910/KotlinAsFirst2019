@@ -90,12 +90,12 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var a: Int = 1
-    var b: Int = 1
-    var c: Int = 2
+    var a = 1
+    var b = 1
+    var c = 2
     if (n == 1) return 1
     if (n == 2) return 1
-    for (i: Int in 3..n) {
+    for (i in 3..n) {
         c = a + b
         a = b
         b = c
@@ -118,9 +118,9 @@ fun lcm(m: Int, n: Int): Int {
     if (m == n) return n
     while (n1 != m1) {
         if (m1 > n1) {
-            m1 = m1 - n1
+            m1 -= n1
         } else {
-            n1 = n1 - m1
+            n1 -= m1
         }
 
     }
@@ -135,11 +135,8 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    val a: Int = n
-    for (i in 2..a) if (a % i == 0) {
-        return i
-    }
-    return 0
+    for (i in 1..sqrt(n.toDouble()).toInt()) if (n % i == 0 && i > 1) return i
+    return n
 }
 
 /**
@@ -147,13 +144,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    val a: Int = n
-    for (i in 2..a) if (a % i == 0) {
-        return a / i
-    }
-    return 0
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -162,21 +153,7 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    var a = m
-    var b = n
-    if (a == 1 && b == 1) return true
-    if (a == b) return false
-    while (a != b) {
-        if (a > b) {
-            a = a - b
-        } else {
-            b = b - a
-        }
-    }
-    return a == 1
-
-}
+fun isCoPrime(m: Int, n: Int) = (lcm(m, n) == m * n)
 
 
 /**
@@ -211,14 +188,14 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * этого для какого-либо начального X > 0.
  */
 fun collatzSteps(x: Int): Int {
-    var n: Int = 0
+    var n = 0
     var x1 = x
     while (x1 != 1) {
         if (x1 % 2 == 0) {
-            n = n + 1
-            x1 = x1 / 2
+            n += 1
+            x1 /= 2
         } else {
-            n = n + 1
+            n += 1
             x1 = 3 * x1 + 1
         }
     }
@@ -235,24 +212,14 @@ fun collatzSteps(x: Int): Int {
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
 fun sin(x: Double, eps: Double): Double {
-    val x1: Double = ((x / PI) % 2) * PI
-    var sinx: Double = 0.0
-    var a: Double = 1.0
-    fun giaithua(n: Int): Double {
-        var gt: Double = 1.0
-        for (i: Int in 1..n) {
-            gt = gt * i
-        }
-        return gt
-
-
-    }
-
-    var n: Int = 1
+    val x1 = ((x / PI) % 2) * PI
+    var sinx = 0.0
+    var a = 1.0
+    var n = 1
     while (abs(a) >= eps) {
-        a = pow(-1.0, (n - 1).toDouble()) * pow(x1, (2 * n - 1).toDouble()) / giaithua(2 * n - 1)
-        sinx = sinx + a
-        n = n + 1
+        a = pow(-1.0, (n - 1).toDouble()) * pow(x1, (2 * n - 1).toDouble()) / factorial(2 * n - 1)
+        sinx += a
+        n++
 
     }
     return sinx
@@ -269,26 +236,14 @@ fun sin(x: Double, eps: Double): Double {
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
 fun cos(x: Double, eps: Double): Double {
-    val x1: Double = ((x / PI) % 2) * PI
+    val x1 = ((x / PI) % 2) * PI
     var a = 1.0
-    var cosx: Double = 0.0
-    fun giaithua(n: Int): Double {
-        var gt: Double = 1.0
-        for (i in 1..n) {
-            gt = gt * i
-
-        }
-        return gt
-
-    }
-
-    var n: Int = 0
+    var cosx = 0.0
+    var n = 0
     while (abs(a) >= eps) {
-        a = pow(-1.0, n.toDouble()) * pow(x1, 2 * n.toDouble()) / giaithua(2 * n)
-        cosx = cosx + a
-        n = n + 1
-
-
+        a = pow(-1.0, n.toDouble()) * pow(x1, 2 * n.toDouble()) / factorial(2 * n)
+        cosx += a
+        n++
     }
     return cosx
 }
@@ -301,13 +256,13 @@ fun cos(x: Double, eps: Double): Double {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    var x: Int = n
-    var s: Int = 0
+    var x = n
+    var s = 0
     var i: Int
     while (x > 0) {
         i = x % 10
         s = s * 10 + i
-        x = x / 10
+        x /= 10
     }
     return s
 
@@ -323,13 +278,13 @@ fun revert(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean {
-    var x: Int = n
-    var y: Int = 0
+    var x = n
+    var y = 0
     var i: Int
     while (x > 0) {
         i = x % 10
         y = y * 10 + i
-        x = x / 10
+        x /= 10
     }
 
     return n == y
@@ -352,7 +307,7 @@ fun hasDifferentDigits(n: Int): Boolean {
     if (x in 0..9) return false
     while (a == b) {
         a = x % 10
-        x = x / 10
+        x /= 10
         if (x == 0) break
         b = x % 10
 
@@ -373,11 +328,11 @@ fun hasDifferentDigits(n: Int): Boolean {
  */
 fun squareSequenceDigit(n: Int): Int {
     fun count(x: Int): Int {
-        var a: Int = x
-        var i: Int = 0
+        var a = x
+        var i = 0
         while (a > 0) {
-            a = a / 10
-            i = i + 1
+            a /= 10
+            i++
         }
         return i
 
@@ -387,17 +342,16 @@ fun squareSequenceDigit(n: Int): Int {
     var k = 0
     while (k < n) {
         k++
-        b = b + count(k * k)
-        var i: Int = 0
+        b += count(k * k)
+        var i = 0
         var c: Int = k * k
         if (b >= n) {
             while (b >= n) {
                 i = c % 10
-                c = c / 10
-                b = b - 1
+                c /= 10
+                b -= 1
             }
-        return i
-            break
+            return i
         }
     }
     return 0
@@ -428,11 +382,11 @@ fun fibSequenceDigit(n: Int): Int {
     }
 
     fun count(n: Int): Int {
-        var a: Int = n
-        var i: Int = 0
+        var a = n
+        var i = 0
         while (a > 0) {
-            a = a / 10
-            i = i + 1
+            a /= 10
+            i++
         }
         return i
     }
@@ -440,28 +394,28 @@ fun fibSequenceDigit(n: Int): Int {
     fun countofsequence(n: Int): Int {
         var s = 0
         for (i: Int in 1..n) {
-            s = s + count(fib(i))
+            s += count(fib(i))
         }
         return s
 
     }
 
     fun cc(n: Int): Int {
-        val a: Int = n
-        var k: Int = 0
+        val a = n
+        var k = 0
         while (countofsequence(k) < a) {
-            k = k + 1
+            k++
             if (countofsequence(k) >= a) break
         }
-        var i: Int = 0
+        var i = 0
         var b: Int = countofsequence(k)
         var c: Int = fib(k)
         if (a == 1) return 1
         if (a == 2) return 1
         while (b >= a) {
             i = c % 10
-            c = c / 10
-            b = b - 1
+            c /= 10
+            b -= 1
 
         }
         return i

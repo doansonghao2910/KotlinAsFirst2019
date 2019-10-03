@@ -53,7 +53,7 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
 fun main() {
     val x1x2 = quadraticRootProduct(1.0, 13.0, 42.0)
     println("Root product: $x1x2")
-    val time = seconds(8,20,35)
+    val time = seconds(8, 20, 35)
     println("Seconds = $time")
 }
 
@@ -66,8 +66,7 @@ fun main() {
 fun seconds(
     hours: Int,
     minutes: Int, seconds: Int
-): Int =
-    3600 * hours + 60 * minutes + 1 * seconds
+): Int = 3600 * hours + 60 * minutes + 1 * seconds
 
 /**
  * Тривиальная
@@ -78,8 +77,6 @@ fun seconds(
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double =
     ((sagenes * 48 * 4.445 + arshins * 16 * 4.445 + vershoks * 4.445) / 100)
-
-
 
 
 /**
@@ -95,6 +92,7 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
     val s: Double = sec.toDouble()
     return (d + s / 3600 + m / 60) * PI / 180
 }
+
 /**
  * Тривиальная
  *
@@ -120,6 +118,7 @@ fun thirdDigit(number: Int): Int = (number / 100) % 10
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int =
     60 * (hoursArrive - hoursDepart) + (minutesArrive - minutesDepart)
+
 /**
  * Простая
  *
@@ -132,11 +131,13 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
     val p: Double = percent.toDouble()
     return i * pow((1 + p / 100), 3.0)
 }
+
 /**
  * Простая
  *
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
+
 fun numberRevert(number: Int): Int = (number % 10) * 100 + ((number / 10) % 10) * 10 + (number / 100)
 

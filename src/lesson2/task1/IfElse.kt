@@ -68,8 +68,6 @@ fun ageDescription(age: Int): String = when {
     (age % 10 == 1) && (age % 100 != 11) -> "$age год"
     (age % 10 in 2..4) && (age % 100 !in 12..14) -> "$age года"
     else -> "$age лет"
-
-
 }
 
 /**
@@ -84,11 +82,9 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double = when {
-    (t1*v1>=(t2*v2+v3*t3)) -> ((v1*t1+t2*v2+t3*v3)/(2*v1))
-    ((t1*v1+t2*v2)>=v3*t3) -> (((-v1*t1+v2*t2+v3*t3)/(2*v2))+t1)
-    else ->((-v1*t1-v2*t2+v3*t3)/(2*v3)+t1+t2)
-
-
+    (t1 * v1 >= (t2 * v2 + v3 * t3)) -> ((v1 * t1 + t2 * v2 + t3 * v3) / (2 * v1))
+    ((t1 * v1 + t2 * v2) >= v3 * t3) -> (((-v1 * t1 + v2 * t2 + v3 * t3) / (2 * v2)) + t1)
+    else -> ((-v1 * t1 - v2 * t2 + v3 * t3) / (2 * v3) + t1 + t2)
 }
 
 /**
@@ -105,12 +101,10 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int = when {
-    ((kingX - rookX1 != 0) && (kingY - rookY1 != 0)) && ((kingX - rookX2 != 0) && (kingY - rookY2 != 0)) -> 0
-    (((kingX - rookX1 == 0) && (kingY - rookY1 != 0)) || ((kingX - rookX1 != 0) && (kingY - rookY1 == 0))) && ((kingX - rookX2 != 0) && (kingY - rookY2 != 0)) -> 1
-    (((kingX - rookX2 == 0) && (kingY - rookY2 != 0)) || ((kingX - rookX2 != 0) && (kingY - rookY2 == 0))) && ((kingX - rookX1 != 0) && (kingY - rookY1 != 0)) -> 2
-
-
-    else -> 3
+    (kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2) -> 3
+    kingX == rookX1 || kingY == rookY1 -> 1
+    kingX == rookX2 || kingY == rookY2 -> 2
+    else -> 0
 }
 
 /**
@@ -128,14 +122,12 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int = when {
-    (kingX - rookX != 0) && (kingY - rookY != 0) && (abs(kingX - bishopX) != abs(kingY - bishopY)) -> 0
-    (((kingX - rookX == 0) && (kingY - rookY != 0)) || ((kingX - rookX != 0) && (kingY - rookY == 0))) && (abs(kingX - bishopX) != abs(
-        kingY - bishopY
-    )) -> 1
-    (abs(kingX - bishopX) == abs(kingY - bishopY)) && (kingX - rookX != 0) && (kingY - rookY != 0) -> 2
-    else -> 3
-
+    kingX == rookX || kingY == rookY && (abs(kingX - bishopX) == abs(kingY - bishopY)) -> 3
+    kingX == rookX || kingY == rookY -> 1
+    (abs(kingX - bishopX) == abs(kingY - bishopY)) -> 2
+    else -> 0
 }
+
 /**
  * Простая
  *
