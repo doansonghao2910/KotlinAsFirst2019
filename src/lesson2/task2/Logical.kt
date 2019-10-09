@@ -3,6 +3,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
@@ -33,9 +34,8 @@ fun isNumberHappy(number: Int): Boolean = when {
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = when {
-    ((x1 - x2 == 0) && (y1 - y2 != 0)) || ((x1 - x2 != 0) && (y1 - y2 == 0)) || (kotlin.math.abs(x1 - x2) == kotlin.math.abs(
-        y1 - y2
-    )) -> true
+    ((x1 - x2 == 0) && (y1 - y2 != 0)) || ((x1 - x2 != 0) && (y1 - y2 == 0)) ||
+            (abs(x1 - x2) == abs(y1 - y2)) -> true
     else -> false
 }
 
@@ -83,4 +83,5 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int) =
-    (a <= r && b <= s) || (a <= s && b <= r) || (b <= r && c <= s) || (b <= s && c <= r) || (a <= r && c <= s) || (a <= s && c <= r)
+    (a <= r && b <= s) || (a <= s && b <= r) || (b <= r && c <= s) || (b <= s && c <= r) ||
+            (a <= r && c <= s) || (a <= s && c <= r)

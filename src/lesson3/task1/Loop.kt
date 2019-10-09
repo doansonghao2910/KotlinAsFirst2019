@@ -112,7 +112,6 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    val h: Int = m * n
     var m1 = m
     var n1 = n
     if (m == n) return n
@@ -124,7 +123,7 @@ fun lcm(m: Int, n: Int): Int {
         }
 
     }
-    return h / m1
+    return (m * n) / m1
 
 
 }
@@ -192,10 +191,10 @@ fun collatzSteps(x: Int): Int {
     var x1 = x
     while (x1 != 1) {
         if (x1 % 2 == 0) {
-            n += 1
+            n++
             x1 /= 2
         } else {
-            n += 1
+            n++
             x1 = 3 * x1 + 1
         }
     }
@@ -367,61 +366,35 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    fun fib(n: Int): Int {
-        var a = 1
-        var b = 1
-        var c = 2
-        if (n == 1) return 1
-        if (n == 2) return 2
-        for (i: Int in 3..n) {
-            c = a + b
-            a = b
-            b = c
-        }
-        return c
-    }
-
-    fun count(n: Int): Int {
-        var a = n
+    fun count(x: Int): Int {
+        var a = x
         var i = 0
         while (a > 0) {
             a /= 10
             i++
         }
         return i
-    }
-
-    fun countofsequence(n: Int): Int {
-        var s = 0
-        for (i: Int in 1..n) {
-            s += count(fib(i))
-        }
-        return s
 
     }
 
-    fun cc(n: Int): Int {
-        val a = n
-        var k = 0
-        while (countofsequence(k) < a) {
-            k++
-            if (countofsequence(k) >= a) break
-        }
+    var b = 0
+    var k = 0
+    while (k < n) {
+        k++
+        b += count(fib(k))
         var i = 0
-        var b: Int = countofsequence(k)
         var c: Int = fib(k)
-        if (a == 1) return 1
-        if (a == 2) return 1
-        while (b >= a) {
-            i = c % 10
-            c /= 10
-            b -= 1
-
+        if (b >= n) {
+            while (b >= n) {
+                i = c % 10
+                c /= 10
+                b -= 1
+            }
+            return i
         }
-        return i
-
     }
-    return cc(n)
+    return 0
+
 }
 
 
