@@ -138,7 +138,7 @@ fun mean(list: List<Double>): Double = when {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    var x = list.sum()
+    val x = list.sum()
     for (i in 0 until list.size) {
         list[i] = list[i] - x / list.size
     }
@@ -206,7 +206,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
 fun factorize(n: Int): List<Int> {
     var b: Int = n
     var i = 2
-    var result = mutableListOf<Int>()
+    val result = mutableListOf<Int>()
     if (isPrime(b) && b > 2) return result + n
     while (b != 1) {
         if (b % i == 0) {
@@ -230,7 +230,7 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "")
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя
@@ -242,9 +242,10 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = ""
 fun convert(n: Int, base: Int): List<Int> {
     var x: Int
     var a = n
-    var result = mutableListOf<Int>()
-    if (a == 0) return listOf()
-    while (a > 0) {
+    val k = listOf(0)
+    val result = mutableListOf<Int>()
+    if (a == 0) return k
+    while (a >= 0) {
         x = (a % base)
         result.add(x)
         a /= base
@@ -311,8 +312,8 @@ fun decimalFromString(str: String, base: Int): Int = decimal((str.toList().map {
  */
 fun roman(n: Int): String {
     var a = n
-    var x = mutableListOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
-    var y = mutableListOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val x = mutableListOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    val y = mutableListOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
     var b = ""
     while (x.size > 0) {
         if (a < x[0]) {

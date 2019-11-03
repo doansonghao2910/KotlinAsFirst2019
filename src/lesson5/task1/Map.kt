@@ -123,7 +123,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = a.keys
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    for ((x, y) in b) {
+    for (x in b.keys) {
         if (a.containsKey(x) && a[x] == b[x]) a.remove(x)
     }
 }
@@ -136,7 +136,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    var result = mutableSetOf<String>()
+    val result = mutableSetOf<String>()
     for (y in 0 until a.size) {
         for (i in 0 until b.size) {
             if (a[y] == b[i])
@@ -165,7 +165,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
-    var mapC = mutableMapOf<String, String>()
+    val mapC = mutableMapOf<String, String>()
     for (i in mapA.keys) {
         if (mapA[i] != mapB[i] && mapB.contains(i)) {
             mapC[i] = "${mapA[i]}, ${mapB[i]}"
@@ -224,9 +224,9 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String) =
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    var k = mutableSetOf<Char>()
-    var x = word.toLowerCase().filter { k.add(it) }.toList()
-    return chars.containsAll(x)
+    val k = mutableSetOf<Char>()
+    val x = word.toLowerCase().filter { k.add(it) }.toList()
+    return chars.map { it.toLowerCase() }.containsAll(x)
 
 
 }
@@ -256,7 +256,7 @@ fun extractRepeats(list: List<String>) =
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
 fun hasAnagrams(words: List<String>): Boolean {
-    var x = words.map { it.toList().sorted() }.distinct()
+    val x = words.map { it.toList().sorted() }.distinct()
     if (words.isEmpty()) return false
     return (words.map { it.toList().sorted() }) != x
 }
