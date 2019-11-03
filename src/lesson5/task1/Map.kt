@@ -122,7 +122,11 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = a.keys
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit = TODO()
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
+    for ((x, y) in b) {
+        if (a.containsKey(x) && a[x] == b[x]) a.remove(x)
+    }
+}
 
 /**
  * Простая
