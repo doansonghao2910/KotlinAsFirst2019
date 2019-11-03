@@ -165,6 +165,8 @@ class Tests {
         assertEquals(listOf(2), factorize(2))
         assertEquals(listOf(3, 5, 5), factorize(75))
         assertEquals(listOf(2, 3, 3, 19), factorize(342))
+        assertEquals(listOf(7, 7, 31, 31, 151, 151), factorize(1073676289))
+        assertEquals(listOf(1073676287), factorize(1073676287))
     }
 
     @Test

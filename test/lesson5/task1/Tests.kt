@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 
-class Tests {
+class qTests {
     @Test
     @Tag("Example")
     fun shoppingListCostTest() {
