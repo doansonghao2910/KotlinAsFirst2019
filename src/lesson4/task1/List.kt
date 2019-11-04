@@ -336,4 +336,60 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val numbers1 = listOf(
+        "нуль", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"
+    )
+    val numbers2 = listOf(
+        "десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать",
+        "восемнадцать", "девятнадцать"
+    )
+    val numbers3 = listOf(
+        "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто"
+    )
+    val numbers4 = listOf(
+        "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот",
+        "девятьсот"
+    )
+    val numbers5 = listOf(
+        "одна тысяча", "две тысячи", "три тысячи", "четыре тысячи", "пять тысяч", "шесть тысяч",
+        "семь тысяч", "восемь тысяч", "девять тысяч"
+    )
+    val numbers6 = listOf(
+        "десять тысяч", "одиннадцать тысяч", "двенадцать тысяч", "тринадцать тысяч", "четырнадцать тысяч",
+        "пятнадцать тысяч", "шестнадцать тысяч", "семнадцать тысяч", "восемнадцать тысяч", "девятнадцать тысяч"
+    )
+    var n1 = n
+    var k: Int
+    var tolist = mutableListOf<Int>()
+    var result = mutableListOf<String>()
+    while (n1 != 0) {
+        k = n1 % 10
+        tolist.add(k)
+        n1 /= 10
+    }
+    for (i in 0 until tolist.size) {
+        when {
+            tolist[i] == 0 -> result.add("")
+            i == 0 -> result.add(numbers1[tolist[0]])
+            i == 1 && tolist[1] != 1 -> result.add(numbers3[tolist[1] - 1])
+            i == 1 && tolist[1] == 1 -> {
+                result.add(numbers2[tolist[0]])
+                result[0] = ""
+            }
+            i == 2 -> result.add(numbers4[tolist[2] - 1])
+            i == 3 -> result.add(numbers5[tolist[i] - 1])
+            i == 4 && tolist[4] != 1 -> result.add(numbers3[tolist[4] - 1])
+            i == 4 && tolist[4] == 1 -> {
+                result.add(numbers6[tolist[3]])
+                result[3] = ""
+            }
+            i == 5 -> result.add(numbers4[tolist[5] - 1])
+        }
+    }
+    when {
+        (n / 1000) % 10 == 0 && n > 1000 -> result[3] = "тысяч"
+        n == 0 -> result = mutableListOf("нуль")
+    }
+    return result.reversed().filter { it != "" }.joinToString(separator = " ")
+}
