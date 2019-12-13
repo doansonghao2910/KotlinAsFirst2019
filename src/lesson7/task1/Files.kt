@@ -138,28 +138,7 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun spaces(dif: Int, siz: Int): MutableList<String> {
-    val result = mutableListOf<String>()
-    for (i in 0 until siz) result.add(" ".repeat(dif / (siz - 1)))
-    for (i in 0 until dif % (siz - 1)) result[i] += " "
-    result[result.lastIndex] = ""
-    return result
-}
-
-fun alignFileByWidth(inputName: String, outputName: String) {
-    val lol = File(inputName).readLines().map { it -> it.split(" ").filter { it != "" }.joinToString(" ").trim() }
-    val best = (lol.maxBy { it.length } ?: "").length
-    val outputStream = File(outputName).bufferedWriter()
-    for (line in lol) {
-        val newline = line.split(" ")
-        if (newline.size == 1) outputStream.write(newline.joinToString("")) else {
-            val space = spaces(best - newline.joinToString("").length, newline.size)
-            newline.forEachIndexed { index, _ ->
-                outputStream.write(newline[index] + space[index])
-            }
-        }
-        outputStream.newLine()
-    }
-    outputStream.close()
+    TODO()
 }
 
 
@@ -296,40 +275,7 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    val loll = File(inputName).readLines().toMutableList()
-    val outputStream = File(outputName).bufferedWriter()
-    var a = 0
-    var b = 1
-    var s = 1
-    var i = 1
-    val result = mutableListOf("<html> <body> <p>")
-    loll.forEachIndexed { i, _ -> if (loll[i].isEmpty()) loll[i] = "</p><p>" }
-    var e = loll.joinToString("\n")
-    while (a < e.length) {
-        when (a) {
-            e.indexOf("**", a) -> {
-                if (b == 1) result.add("<b>") else result.add("</b>")
-                b = -b
-                a++
-            }
-            e.indexOf("~~", a) -> {
-                if (s == 1) result.add("<s>") else result.add("</s>")
-                s = -s
-                a++
-            }
-            e.indexOf("*", a) -> {
-                if (i == 1) result.add("<i>") else result.add("</i>")
-                i = -i
-            }
-            else -> {
-                result.add(e[a].toString())
-            }
-        }
-        a++
-    }
-    result.add("</p></body></html>")
-    outputStream.write((result.joinToString("")))
-    outputStream.close()
+    TODO()
 }
 
 /**

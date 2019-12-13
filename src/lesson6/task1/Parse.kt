@@ -111,6 +111,7 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
+    if (digital == "") return ""
     val x = digital.toList()
     var i = 0
     if (x[i] in 'a'..'b') {
