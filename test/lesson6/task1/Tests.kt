@@ -85,6 +85,7 @@ class Tests {
         assertEquals(-1, bestHighJump("???"))
         assertEquals(230, bestHighJump("220 + 224 %+ 228 %- 230 + 232 %%- 234 %"))
     }
+
     @Test
     @Tag("Hard")
     fun plusMinus() {

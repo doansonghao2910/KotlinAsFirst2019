@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 
-class qTests {
+class Tests {
     @Test
     @Tag("Example")
     fun shoppingListCostTest() {
@@ -149,7 +149,7 @@ class qTests {
         )
         assertEquals(
             listOf("Marat"),
-            whoAreInBoth(listOf("Marat", "Mikhail", "Marat"), listOf("Marat", "Marat"))
+            whoAreInBoth(listOf("Marat", "Mikhail"), listOf("Marat", "Kirill"))
         )
         assertEquals(
             emptyList<String>(),
