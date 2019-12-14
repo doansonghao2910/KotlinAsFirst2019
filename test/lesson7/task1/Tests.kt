@@ -119,7 +119,7 @@ Basic, Ruby, Swift.
 
     @Test
     @Tag("Hard")
-    fun alignFileByWidth() {
+    fun alignFileByWidth(s: String, s1: String) {
         alignFileByWidth("input/width_in1.txt", "temp.txt")
         assertFileContent(
             "temp.txt",
