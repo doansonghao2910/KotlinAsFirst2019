@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import java.lang.IllegalArgumentException
 
 /**
  * Пример
@@ -201,13 +202,19 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String) =
-    if (Regex("""[^\d\+\%\-\s]""").containsMatchIn(jumps)) -1
-    else
-        jumps.split(" ").filterIndexed { index, _ ->
-            index < jumps.split(" ").size - 1 && '+' in jumps.split(" ")[index + 1]
-        }.map { it.toInt() }.max()
-            ?: -1
+fun bestHighJump(jumps: String): Int {
+    val a = jumps.split(" ", "%", "-")
+    var b = -1
+    try {
+        val list = a.filter { it != "" }
+        for (i in 1 until list.size) {
+            if (list[i] == "+" && list[i - 1].toInt() > b) b = list[i - 1].toInt()
+        }
+        return b
+    } catch (e: NumberFormatException) {
+        return -1
+    }
+}
 
 
 /**
@@ -219,7 +226,28 @@ fun bestHighJump(jumps: String) =
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val x = expression.split("-", "+", " ").filter { it != "" }
+    val y = expression.split(Regex("""\d|\s""")).filter { it != "" }
+    if (x.size <= y.size) throw IllegalArgumentException()
+    val a = mutableListOf<Int>()
+    val b = mutableListOf<Int>()
+    val list = expression.split(" ")
+    for (i in 1 until list.size) {
+        if (list[i] == "+") {
+            a.add(list[i + 1].toInt())
+            a.sum()
+        }
+        if (list[i] == "-") {
+            b.add(list[i + 1].toInt())
+            b.sum()
+
+        }
+
+    }
+    return (a.toSet().sum() - b.sum() + list[0].toInt())
+}
+
 
 /**
  * Сложная
