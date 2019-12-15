@@ -1,11 +1,20 @@
 package lesson3.task1
 
 fun main() {
-    val x = "Хлеб 39.9; Молоко 62.5; Курица 184.0; Конфеты 89.9"
-    var list = x.split("; ", " ")
-    var b = mutableListOf<String>()
-    var a = mutableListOf<Double>()
-
+    val x = "Z"
+    val list = mutableListOf<Int>()
+    for (i in x)
+        when (i) {
+            'I' -> list.add(1)
+            'V' -> list.add(5)
+            'X' -> list.add(10)
+            'L' -> list.add(50)
+            'C' -> list.add(100)
+            'D' -> list.add(500)
+            'M' -> list.add(1000)
+            else -> list.add(-1)
+        }
+    println(list)
 }
 
 

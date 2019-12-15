@@ -113,9 +113,8 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     if (digital == "") return ""
     val x = digital.toList()
-    var i = 0
+    val i = 0
     if (x[i] in 'a'..'b') {
-        i++
         return ""
     }
     val
@@ -170,7 +169,6 @@ fun flattenPhoneNumber(phone: String): String {
     } catch (e: NumberFormatException) {
         return ""
     }
-    return ""
 }
 
 /**
@@ -186,9 +184,10 @@ fun flattenPhoneNumber(phone: String): String {
 fun bestLongJump(jumps: String): Int {
     if ((Regex("""[^\d\-\s\%]""").containsMatchIn(jumps))) return -1
     val x = jumps.split(" ")
-    var a = (x.filter { it != "-" && it != "%" }.max())
-    if (a == null) return -1
-    else return a.toInt()
+    val a = (x.filter { it != "-" && it != "%" }.max())
+    if (a == "") return -1
+    return if (a == null) -1
+    else a.toInt()
 }
 
 /**
@@ -272,7 +271,7 @@ fun mostExpensive(description: String): String {
             if (a[k] == a.max())
                 return b[k]
         }
-    } catch (e: java.lang.NumberFormatException) {
+    } catch (e: NumberFormatException) {
         return ""
     }
     return ""
@@ -289,7 +288,33 @@ fun mostExpensive(description: String): String {
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+    val list = mutableListOf<Int>()
+    var x = 0
+    for (part in roman) {
+        when (part) {
+            'I' -> list.add(1)
+            'V' -> list.add(5)
+            'X' -> list.add(10)
+            'L' -> list.add(50)
+            'C' -> list.add(100)
+            'D' -> list.add(500)
+            'M' -> list.add(1000)
+            else -> list.add(-1)
+        }
+    }
+    for (i in 0 until list.size) {
+        if (list[i] == -1) return -1
+        if (i == 0) x = list[i]
+        else {
+            if (list[i] <= list[i - 1]) x += list[i]
+            else x += list[i] - 2 * list[i - 1]
+        }
+    }
+    return x
+
+}
+
 
 /**
  * Очень сложная
