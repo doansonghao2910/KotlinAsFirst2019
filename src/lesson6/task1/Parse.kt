@@ -291,8 +291,8 @@ fun mostExpensive(description: String): String {
 fun fromRoman(roman: String): Int {
     val list = mutableListOf<Int>()
     var x = 0
+    if (roman == "") return -1
     for (part in roman) {
-        if (roman == "") return -1
         when (part) {
             'I' -> list.add(1)
             'V' -> list.add(5)
