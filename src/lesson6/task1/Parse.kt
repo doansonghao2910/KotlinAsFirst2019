@@ -292,6 +292,7 @@ fun fromRoman(roman: String): Int {
     val list = mutableListOf<Int>()
     var x = 0
     for (part in roman) {
+        if (roman == "") return -1
         when (part) {
             'I' -> list.add(1)
             'V' -> list.add(5)
@@ -305,7 +306,7 @@ fun fromRoman(roman: String): Int {
     }
     for (i in 0 until list.size) {
         if (list[i] == -1) return -1
-        if (i == 0) x = list[i]
+        if (i == 0) x = list[0]
         else {
             if (list[i] <= list[i - 1]) x += list[i]
             else x += list[i] - 2 * list[i - 1]

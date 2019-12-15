@@ -1,7 +1,7 @@
 package lesson3.task1
 
 fun main() {
-    val x = "Z"
+    val x = "z"
     val list = mutableListOf<Int>()
     for (i in x)
         when (i) {
@@ -12,7 +12,7 @@ fun main() {
             'C' -> list.add(100)
             'D' -> list.add(500)
             'M' -> list.add(1000)
-            else -> list.add(-1)
+            else -> -1
         }
     println(list)
 }
