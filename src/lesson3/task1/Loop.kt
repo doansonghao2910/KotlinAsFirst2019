@@ -329,7 +329,7 @@ fun squareSequenceDigit(n: Int): Int {
         k++
         b += count(k * k)
         var i = 0
-        var c: Int = k * k
+        var c = k * k
         if (b >= n) {
             while (b >= n) {
                 i = c % 10
@@ -358,7 +358,7 @@ fun fibSequenceDigit(n: Int): Int {
         k++
         b += count(fib(k))
         var i = 0
-        var c: Int = fib(k)
+        var c = fib(k)
         if (b >= n) {
             while (b >= n) {
                 i = c % 10

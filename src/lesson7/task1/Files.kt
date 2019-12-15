@@ -70,23 +70,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    val changee = mapOf('Ы' to 'И', 'Я' to 'А', 'Ю' to 'У', 'ы' to 'и', 'я' to 'а', 'ю' to 'у')
-    val nocle = listOf('Ж', 'Ч', 'Ш', 'Щ', 'ж', 'ч', 'ш', 'щ')
-    val outputStream = File(outputName).bufferedWriter()
-    for (line in File(inputName).readLines()) {
-        val newLine = mutableListOf<String>()
-        for (word in line.split(" ")) {
-            val analyze = word.toMutableList()
-            analyze.forEachIndexed { index, _ ->
-                if (index < analyze.size - 1 && analyze[index] in nocle && analyze[index + 1] in changee.keys) analyze[index + 1] =
-                    changee[analyze[index + 1]] ?: ' '
-            }
-            newLine.add(analyze.joinToString(""))
-        }
-        outputStream.write(newLine.joinToString(" "))
-        outputStream.newLine()
-    }
-    outputStream.close()
+    TODO()
 }
 
 /**
@@ -137,10 +121,9 @@ fun centerFile(inputName: String, outputName: String) {
  * 7) В самой длинной строке каждая пара соседних слов должна быть отделена В ТОЧНОСТИ одним пробелом
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
-fun spaces(dif: Int, siz: Int): MutableList<String> {
+fun alignFileByWidth(inputName: String, outputName: String) {
     TODO()
 }
-
 
 /**
  * Средняя

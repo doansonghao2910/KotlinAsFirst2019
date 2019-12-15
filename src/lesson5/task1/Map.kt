@@ -110,16 +110,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
-    var c = b.values.toList()
-    var d = a.values.toList()
-    for (i in 0 until c.size) {
-        for (j in 0 until d.size) {
-            return c[i] == d[j]
-        }
-    }
-    return true
-}
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = a.keys.all { a[it] == b[it] }
 
 
 /**
@@ -151,13 +142,15 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit {
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    var list = mutableListOf<String>()
-    for (i in 0 until a.size) {
-        for (j in 0 until a.size) {
-            if (a[i] == b[j]) list.add(a[i])
+    val result = mutableSetOf<String>()
+    for (y in 0 until a.size) {
+        for (i in 0 until b.size) {
+            if (a[y] == b[i])
+                result.add(a[y])
         }
+
     }
-    return list.toSet().toList()
+    return result.toList()
 }
 
 /**
