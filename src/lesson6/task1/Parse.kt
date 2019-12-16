@@ -246,7 +246,7 @@ fun plusMinus(expression: String): Int {
         }
 
     }
-    return (a.toSet().sum() - b.sum() + list[0].toInt())
+    return (a.sum() - b.sum() + list[0].toInt())
 }
 
 
