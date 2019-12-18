@@ -267,7 +267,7 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
     val words = mutableListOf<String>()
     var long = 0
     for (line in lines) {
-        if (line.toLowerCase().toList().distinct() == line.toLowerCase().toList()) words.add(line)
+        if (line.toLowerCase().toSet().toList() == line.toLowerCase().toList()) words.add(line)
         long = maxOf(line.length, long)
     }
     for (line in words) {
