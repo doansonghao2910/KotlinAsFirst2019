@@ -1,23 +1,13 @@
 package lesson3.task1
 
+import lesson8.task1.Point
+
 fun main() {
-    var expression = "0 - 0 + 1 + 1"
-    val a = mutableListOf<Int>()
-    val b = mutableListOf<Int>()
-    val list = expression.split(" ")
-    for (i in 1 until list.size) {
-        if (list[i] == "+") {
-            a.add(list[i + 1].toInt())
-            a.sum()
-        }
-        if (list[i] == "-") {
-            b.add(list[i + 1].toInt())
-            b.sum()
+    var x = Point(1.0, 2.0)
+    var y = Point(3.0, 5.0)
+    println(x.distance(y))
 
-        }
 
-    }
-    println(a.sum() - b.sum() + list[0].toInt())
 }
 
 
