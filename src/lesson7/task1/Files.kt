@@ -53,8 +53,19 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
-
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    val result = mutableMapOf<String, Int>()
+    val file = File(inputName).readText().toLowerCase()
+    for (a in substrings) {
+        result[a] = 0
+        var stat = file.indexOf(a.toLowerCase(), 0)
+        while (stat != -1) {
+            result[a] = result[a]!! + 1
+            stat = file.indexOf(a.toLowerCase(), stat + 1)
+        }
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -70,7 +81,22 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    val lines = File(inputName).readLines()
+    val map = mapOf('Ы' to "И", 'Я' to "А", 'Ю' to "У", 'ы' to "и", "я" to "а", 'ю' to "у")
+    for (line in lines) {
+        for (word in line.split(" ")) {
+            val char = word.toList()
+            outputStream.write(char[0].toString())
+            for (i in 0..char.size - 2) {
+                val next = char[i + 1]
+                if (char[i] in "ЖЧШЩжчшщ" && next in map.keys) outputStream.write(map.getOrDefault(next, ""))
+                else outputStream.write(next.toString())
+            }
+        }
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 /**
@@ -91,7 +117,17 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    val lines = File(inputName).readLines().map { it.trim() }
+    var l = 0
+    for (line in lines) l = maxOf(l, line.length)
+    for (line in lines) {
+        var add = ""
+        while (add.length != (l - line.length) / 2) add = " $add"
+        outputStream.write(add + line)
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 /**
@@ -143,7 +179,16 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  * Ключи в ассоциативном массиве должны быть в нижнем регистре.
  *
  */
-fun top20Words(inputName: String): Map<String, Int> = TODO()
+fun top20Words(inputName: String): Map<String, Int> {
+    val a = File(inputName).readText().toLowerCase()
+    val b = a.split(Regex("""[^a-zа-яё]+"""))
+    val map = mutableMapOf<String, Int>()
+    val k = b.toSet().filter { it != "" }
+    for (x in k) map[x] = b.count { it == x }
+    var top = if (map.size < 20) 0
+    else map.values.sortedDescending().take(20)[19]
+    return map.filter { it.value >= top }
+}
 
 /**
  * Средняя
@@ -181,7 +226,15 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    val dic = dictionary.mapKeys { it.key.toLowerCase() }.mapValues { it.value.toLowerCase() }
+    val words = File(inputName).readText()
+    for (i in words) {
+        var newI = dic.getOrDefault(i.toLowerCase(), i.toString())
+        if (i.isUpperCase()) newI = newI.capitalize()
+        outputStream.write(newI)
+    }
+    outputStream.close()
 }
 
 /**
@@ -209,7 +262,19 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
-    TODO()
+    val lines = File(inputName).readLines()
+    val outputStream = File(outputName).bufferedWriter()
+    val words = mutableListOf<String>()
+    var long = 0
+    for (line in lines) {
+        if (line.toLowerCase().toList().distinct() == line.toLowerCase().toList()) words.add(line)
+        long = maxOf(line.length, long)
+    }
+    for (line in words) {
+        if (line.length < long) words.remove(line)
+    }
+    outputStream.write(words.joinToString(", "))
+    outputStream.close()
 }
 
 /**
