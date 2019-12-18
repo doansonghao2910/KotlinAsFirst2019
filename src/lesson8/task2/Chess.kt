@@ -2,9 +2,8 @@
 
 package lesson8.task2
 
-import lesson4.task1.abs
-import java.lang.IllegalArgumentException
 import kotlin.math.abs
+import kotlin.math.max
 
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
@@ -160,7 +159,9 @@ fun bishopMoveNumber(start: Square, end: Square): Int = when {
  *          bishopTrajectory(Square(1, 3), Square(6, 8)) = listOf(Square(1, 3), Square(6, 8))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun bishopTrajectory(start: Square, end: Square): List<Square> {
+    TODO()
+}
 
 /**
  * Средняя
@@ -182,7 +183,10 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Пример: kingMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
-fun kingMoveNumber(start: Square, end: Square): Int = TODO()
+fun kingMoveNumber(start: Square, end: Square): Int {
+    if (!check(start) || !check(end)) throw IllegalArgumentException()
+    return max(abs(start.column - end.column), abs(start.row - end.row))
+}
 
 /**
  * Сложная
@@ -198,7 +202,27 @@ fun kingMoveNumber(start: Square, end: Square): Int = TODO()
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun kingTrajectory(start: Square, end: Square): List<Square> {
+    if (!check(start) || !check(end)) throw IllegalArgumentException()
+    val m = listOf(Pair(1, 1), Pair(1, -1), Pair(-1, 1), Pair(-1, -1))
+    val a = mutableListOf<Square>()
+    var to = m[0]
+    when {
+        start.column < end.column && start.row < end.row -> to = m[0]
+        start.column < end.column && start.row > end.row -> to = m[1]
+        start.column > end.column && start.row < end.row -> to = m[2]
+        start.column > end.column && start.row > end.row -> to = m[3]
+    }
+    var p = start
+    while (p != end) {
+        a.add(p)
+        if (p.column == end.column) p = Square(p.column, p.row + to.second)
+        else if (p.row == end.row) p = Square(p.column + to.first, p.row)
+        else p = Square(p.column + to.first, p.row + to.second)
+    }
+    a.add(end)
+    return a
+}
 
 /**
  * Сложная
