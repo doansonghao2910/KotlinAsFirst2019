@@ -54,18 +54,22 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  *
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
-    val result = mutableMapOf<String, Int>()
-    val file = File(inputName).readText().toLowerCase()
-    for (a in substrings) {
-        result[a] = 0
-        var stat = file.indexOf(a.toLowerCase(), 0)
-        while (stat != -1) {
-            result[a] = result[a]!! + 1
-            stat = file.indexOf(a.toLowerCase(), stat + 1)
+    val input = File(inputName).readText().toLowerCase()
+    val map = mutableMapOf<String, Int>()
+    var input1 = ""
+    for (element in substrings) {
+        var d = 0
+        var i = 0
+        while (i <= input.length - element.length) {
+            input1 = input.substring(i, i + element.length)
+            if (input1 == element.toLowerCase()) d++
+            i++
         }
+        map[element] = d
     }
-    return result
+    return map
 }
+
 
 /**
  * Средняя
@@ -185,7 +189,7 @@ fun top20Words(inputName: String): Map<String, Int> {
     val map = mutableMapOf<String, Int>()
     val k = b.toSet().filter { it != "" }
     for (x in k) map[x] = b.count { it == x }
-    var top = if (map.size < 20) 0
+    val top = if (map.size < 20) 0
     else map.values.sortedDescending().take(20)[19]
     return map.filter { it.value >= top }
 }

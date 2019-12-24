@@ -77,17 +77,14 @@ data class Circle(val center: Point, val radius: Double) {
      * Расстояние между пересекающимися окружностями считать равным 0.0.
      */
     fun distance(other: Circle): Double =
-        max(center.distance(other.center), radius + other.radius) - radius - other.radius
+        max(center.distance(other.center), radius + other.radius) - other.radius - radius
 
     /**
      * Тривиальная
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean {
-        if (sqrt(sqr(p.x - center.x) + sqr(p.y - center.y)) <= radius) return true
-        else return false
-    }
+    fun contains(p: Point): Boolean = sqrt(sqr(p.x - center.x) + sqr(p.y - center.y)) <= radius
 }
 
 /**
@@ -109,14 +106,14 @@ data class Segment(val begin: Point, val end: Point) {
  */
 fun diameter(vararg points: Point): Segment {
     var a = Segment(Point(0.0, 0.0), Point(0.0, 0.0))
-    var maxDistance = 0.0
+    var maxdistance = 0.0
     if (points.size < 2) throw IllegalArgumentException("")
     for (i in 0 until points.size) {
         for (k in i + 1 until points.size) {
             val b = points[i].distance(points[k])
-            if (b > maxDistance) {
+            if (b > maxdistance) {
                 a = Segment(points[i], points[k])
-                maxDistance = b
+                maxdistance = b
             }
         }
     }
@@ -179,8 +176,8 @@ class Line private constructor(val b: Double, val angle: Double) {
  */
 fun lineBySegment(s: Segment): Line {
     val a = atan((s.begin.y - s.end.y) / (s.begin.x - s.end.y))
-    if (a < 0.0) return Line(s.begin, PI + a)
-    else return Line(s.begin, a)
+    return if (a < 0.0) Line(s.begin, PI + a)
+    else Line(s.begin, a)
 }
 
 /**

@@ -72,30 +72,22 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
+
+val course = listOf(
+    "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября",
+    "ноября", "декабря"
+)
+
 fun dateStrToDigit(str: String): String {
+    if (!Regex("""(\d{1,2}) ([а-я]+) (\d+)""").matches(str)) return ""
     val parts = str.split(" ")
-    val course = listOf(
-        "января",
-        "февраля",
-        "марта",
-        "апреля",
-        "мая",
-        "июня",
-        "июля",
-        "августа",
-        "сентября",
-        "октября",
-        "ноября",
-        "декабря"
-    )
     try {
-        if (parts.size != 3) return ""
         val day = parts[0].toInt()
         val month = course.indexOf(parts[1]) + 1
+        if (month <= 0) return ""
         val year = parts[2].toInt()
-        if (day > daysInMonth(month, year)) return ""
-        if (month == 0) return ""
-        return String.format("%02d.%02d.%d", day, month, year)
+        if (day !in 1..daysInMonth(month, year)) return ""
+        else return String.format("%02d.%02d.%d", day, month, year)
     } catch (e: NumberFormatException) {
         return ""
     }
@@ -112,29 +104,15 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    if (digital == "") return ""
-    val x = digital.toList()
-    val i = 0
-    if (x[i] in 'a'..'b') {
-        return ""
-    }
-    val
-            parts = digital.split(".")
-    val course = listOf(
-        "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября",
-        "ноября", "декабря"
-    )
-
+    if (!Regex("""((\d{1,2}).(\d{2}).(\d+))""").matches(digital)) return ""
+    val parts = digital.split(".")
     try {
-
-
-        if (parts.size != 3) return ""
         if (parts[1].toInt() !in 1..12) return ""
         val day = parts[0].toInt()
         val year = parts[2].toInt()
         val month = course[parts[1].toInt() - 1]
-        if (day > daysInMonth(parts[1].toInt(), year).toString().toInt()) return ""
-        return (String.format("%d %s %d", day, month, year))
+        if (day !in 1..daysInMonth(parts[1].toInt(), year)) return ""
+        else return (String.format("%d %s %d", day, month, year))
     } catch (e: NumberFormatException) {
         return ""
     }
@@ -159,9 +137,9 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     try {
         if (Regex("""\(\)""").containsMatchIn(phone)) return ""
-        val parts = phone.split(" ", "-", "(", ")").filter { it != "" }
+        val list = phone.split(" ", "-", "(", ")").filter { it != "" }
         var result = ""
-        for (part in parts) {
+        for (part in list) {
             if (part.toInt() >= 0) {
                 result += part
             }
@@ -187,8 +165,7 @@ fun bestLongJump(jumps: String): Int {
     val x = jumps.split(" ")
     val a = (x.filter { it != "-" && it != "%" }.max())
     if (a == "") return -1
-    return if (a == null) -1
-    else a.toInt()
+    return a?.toInt() ?: -1
 }
 
 /**
@@ -203,16 +180,15 @@ fun bestLongJump(jumps: String): Int {
  * вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val a = jumps.split(" ", "%", "-")
-    var b = -1
-    try {
-        val list = a.filter { it != "" }
+    val list = jumps.split(" ", "%", "-").filter { it != "" }
+    var a = -1
+    return try {
         for (i in 1 until list.size) {
-            if (list[i] == "+" && list[i - 1].toInt() > b) b = list[i - 1].toInt()
+            if (list[i] == "+" && list[i - 1].toInt() > a) a = list[i - 1].toInt()
         }
-        return b
+        a
     } catch (e: NumberFormatException) {
-        return -1
+        -1
     }
 }
 
@@ -261,16 +237,16 @@ fun plusMinus(expression: String): Int {
  */
 fun firstDuplicateIndex(str: String): Int {
     val list = str.toLowerCase().split(" ")
-    var x = -1
-    var a = 0
+    var number = -1
+    var x = 0
     for (i in 0 until list.size - 1) {
         if (list[i] == list[i + 1]) {
-            x = i
-            return a + x
+            number = i
+            return number + x
 
-        } else a += list[i].length
+        } else x += list[i].length
     }
-    return x
+    return number
 
 }
 
@@ -287,18 +263,18 @@ fun firstDuplicateIndex(str: String): Int {
  */
 fun mostExpensive(description: String): String {
     val list = description.split("; ", " ")
-    val b = mutableListOf<String>()
-    val a = mutableListOf<Double>()
+    val listD = mutableListOf<Double>()
+    val listS = mutableListOf<String>()
     try {
         for (i in 1 until list.size step 2) {
-            a.add(list[i].toDouble())
+            listD.add(list[i].toDouble())
         }
         for (j in 0 until list.size - 1 step 2) {
-            b.add(list[j])
+            listS.add(list[j])
         }
-        for (k in 0 until a.size) {
-            if (a[k] == a.max())
-                return b[k]
+        for (k in 0 until listD.size) {
+            if (listD[k] == listD.max())
+                return listS[k]
         }
     } catch (e: NumberFormatException) {
         return ""
@@ -319,7 +295,7 @@ fun mostExpensive(description: String): String {
  */
 fun fromRoman(roman: String): Int {
     val list = mutableListOf<Int>()
-    var x = 0
+    var a = -1
     if (roman == "") return -1
     for (part in roman) {
         when (part) {
@@ -335,13 +311,13 @@ fun fromRoman(roman: String): Int {
     }
     for (i in 0 until list.size) {
         if (list[i] == -1) return -1
-        if (i == 0) x = list[0]
+        if (i == 0) a = list[0]
         else {
-            if (list[i] <= list[i - 1]) x += list[i]
-            else x += list[i] - 2 * list[i - 1]
+            a += if (list[i] <= list[i - 1]) list[i]
+            else list[i] - 2 * list[i - 1]
         }
     }
-    return x
+    return a
 
 }
 
