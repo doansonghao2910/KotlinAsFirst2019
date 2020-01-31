@@ -62,7 +62,8 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
         var i = 0
         while (i <= input.length - element.length) {
             input1 = input.substring(i, i + element.length)
-            if (input1 == element.toLowerCase()) d++
+            if (input1 == element.toLowerCase())
+                d++
             i++
         }
         map[element] = d
