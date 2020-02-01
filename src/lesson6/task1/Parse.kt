@@ -205,9 +205,10 @@ fun bestHighJump(jumps: String): Int {
 fun plusMinus(expression: String): Int {
     if (Regex("""[^\d\s\+\-]""").containsMatchIn(expression)) throw IllegalArgumentException()
     if (Regex("""[\n]""").containsMatchIn(expression)) throw IllegalArgumentException()
+    if (Regex("""[\t]""").containsMatchIn(expression)) throw IllegalArgumentException()
     val x = expression.split("-", "+", " ").filter { it != "" }
     val y = expression.split(Regex("""\d|\s""")).filter { it != "" }
-    if (x.size <= y.size) throw IllegalArgumentException()
+    if (y.size >= x.size) throw IllegalArgumentException()
     val a = mutableListOf<Int>()
     val b = mutableListOf<Int>()
     val list = expression.split(" ")
