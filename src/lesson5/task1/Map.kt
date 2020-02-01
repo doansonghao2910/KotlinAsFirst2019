@@ -150,7 +150,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     for (i in 0 until list1.size) {
         if (list1[i] >= 2) list.add(list2[i])
     }
-    return list.filter { it != "" }
+    return list.toList()
 }
 
 /**
